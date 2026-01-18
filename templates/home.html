@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Dashboard</title>
+    <style>
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f9fafb; color: #111827; }
+        
+        /* Navigation Bar */
+        nav { 
+            background: white; border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-weight: 800; font-size: 1.2rem; color: #6366f1; }
+        .logout-btn { 
+            text-decoration: none; color: #ef4444; font-weight: 500;
+            padding: 0.5rem 1rem; border-radius: 0.4rem; transition: background 0.2s;
+        }
+        .logout-btn:hover { background: #fef2f2; }
+
+        /* Flash Messages */
+        .flash-container {
+            max-width: 1000px; margin: 1rem auto; padding: 0 2rem;
+        }
+        .flash {
+            padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;
+            border: 1px solid transparent;
+        }
+        .flash-success { background: #d1fae5; color: #065f46; border-color: #34d399; }
+
+        /* Main Content */
+        .main-content { max-width: 1000px; margin: 2rem auto; padding: 0 2rem; }
+        .welcome-card {
+            background: white; padding: 3rem; border-radius: 1rem;
+            border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stats-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem; margin-top: 2rem;
+        }
+        .stat-item { background: #f3f4f6; padding: 1.5rem; border-radius: 0.8rem; }
+        .stat-item h4 { margin: 0; color: #6b7280; font-size: 0.9rem; }
+        .stat-item p { margin: 0.5rem 0 0; font-size: 1.5rem; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ProjectPanel</div>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </nav>
+
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="main-content">
+        <div class="welcome-card">
+            <h1>Welcome, {{ user }}! 👋</h1>
+            <p>Your engineering workspace is now active. You can now begin deploying your AI modules.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>Session Status</h4>
+                    <p style="color: #10b981;">Encrypted</p>
+                </div>
+                <div class="stat-item">
+                    <h4>Account Level</h4>
+                    <p>Admin</p>
+                </div>
+                <div class="stat-item">
+                    <h4>Server</h4>
+                    <p style="font-size: 1.1rem;">Render-Cloud</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
